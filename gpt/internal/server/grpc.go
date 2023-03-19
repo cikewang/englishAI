@@ -1,6 +1,7 @@
 package server
 
 import (
+	"gpt/api/chat"
 	v1 "gpt/api/helloworld/v1"
 	"gpt/internal/conf"
 	"gpt/internal/service"
@@ -11,7 +12,7 @@ import (
 )
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, logger log.Logger) *grpc.Server {
+func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, chatService *service.ChatService, logger log.Logger) *grpc.Server {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
@@ -28,5 +29,7 @@ func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 	}
 	srv := grpc.NewServer(opts...)
 	v1.RegisterGreeterServer(srv, greeter)
+
+	chat.RegisterChatServer(srv, chatService)
 	return srv
 }

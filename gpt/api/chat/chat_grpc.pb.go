@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.21.12
-// source: gpt/api/chat/chat.proto
+// source: api/chat/chat.proto
 
 package chat
 
@@ -26,6 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChatClient interface {
+	// 对话
 	GetChat(ctx context.Context, in *GetChatRequest, opts ...grpc.CallOption) (*GetChatReply, error)
 }
 
@@ -50,6 +51,7 @@ func (c *chatClient) GetChat(ctx context.Context, in *GetChatRequest, opts ...gr
 // All implementations must embed UnimplementedChatServer
 // for forward compatibility
 type ChatServer interface {
+	// 对话
 	GetChat(context.Context, *GetChatRequest) (*GetChatReply, error)
 	mustEmbedUnimplementedChatServer()
 }
@@ -105,5 +107,5 @@ var Chat_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "gpt/api/chat/chat.proto",
+	Metadata: "api/chat/chat.proto",
 }

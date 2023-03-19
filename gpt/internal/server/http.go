@@ -1,6 +1,7 @@
 package server
 
 import (
+	chat "gpt/api/chat"
 	v1 "gpt/api/helloworld/v1"
 	"gpt/internal/conf"
 	"gpt/internal/service"
@@ -11,7 +12,11 @@ import (
 )
 
 // NewHTTPServer new an HTTP server.
-func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.Logger) *http.Server {
+func NewHTTPServer(
+	c *conf.Server,
+	greeter *service.GreeterService,
+	chatService *service.ChatService,
+	logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
@@ -28,5 +33,6 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 	}
 	srv := http.NewServer(opts...)
 	v1.RegisterGreeterHTTPServer(srv, greeter)
+	chat.RegisterChatHTTPServer(srv, chatService)
 	return srv
 }

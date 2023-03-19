@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/api/annotations.proto";
+
 package gpt.api.chat;
 
 option go_package = "englishAI/gpt/api/chat;chat";
@@ -7,16 +9,23 @@ option java_multiple_files = true;
 option java_package = "gpt.api.chat";
 
 service Chat {
-	rpc GetChat (GetChatRequest) returns (GetChatReply);
+	// 对话
+	rpc GetChat (GetChatRequest) returns (GetChatReply){
+		option(google.api.http) = {
+			post: "/chat",
+			body: "*" // 用来解析请求主题，解析到 LoginReq 中
+		};
+	}
 }
 
 message GetChatRequest {
-		string content = 1;
-		int32 user=2;
+	int32 user=1;
+	string content = 2;
+
 }
 
 message GetChatReply {
-	string content = 1;
-	int32 user=2;
+	int32 user=1;
+	string content = 2;
 }
 
