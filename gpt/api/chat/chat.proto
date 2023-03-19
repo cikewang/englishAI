@@ -19,13 +19,13 @@ service Chat {
 }
 
 message GetChatRequest {
-	int32 user=1;
+	string user=1;
 	string content = 2;
 
 }
 
 message GetChatReply {
-	int32 user=1;
+	string user=1;
 	string content = 2;
 }
 
