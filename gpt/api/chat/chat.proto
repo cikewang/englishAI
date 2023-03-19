@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package gpt.api.chat;
+
+option go_package = "englishAI/gpt/api/chat;chat";
+option java_multiple_files = true;
+option java_package = "gpt.api.chat";
+
+service Chat {
+	rpc GetChat (GetChatRequest) returns (GetChatReply);
+}
+
+message GetChatRequest {
+		string content = 1;
+		int32 user=2;
+}
+
+message GetChatReply {
+	string content = 1;
+	int32 user=2;
+}
+
